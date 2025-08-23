@@ -5,8 +5,8 @@ stages:
       - src/data_ingestion.py
     outs:
       - data/raw
-    # params:
-    #   - data_source.url
+    params:
+      - data_ingestion.test_size
 
   pre_processing:
     cmd: python src/pre_processing.py
@@ -23,8 +23,8 @@ stages:
       - data/interim
     outs:
       - data/processed
-    # params:
-    #   - feature_params
+    params:
+      - feature_engineering.max_features
 
   model_building:
     cmd: python src/model_building.py
@@ -33,8 +33,9 @@ stages:
       - data/processed
     outs:
       - models/model.pkl
-    # params:
-    #   - model_params
+    params:
+      - model_building.n_estimators
+      - model_building.random_state
 
   model_evaluation:
     cmd: python src/model_eval.py
